@@ -123,11 +123,29 @@ server.put('/usuario/:id', async (request, reply) => {
 })
 
 server.delete('/usuarios/:id', async (request, reply) => {
-  const usuarioId = request.params.id
+  try {
+    const usuarioId = request.params.id
+    const response = await database.delete(usuarioId)
 
-  await database.delete(usuarioId)
+    const resposta = {
+      success: true,
+      message: 'Usuário excluído com sucesso',
+    }
 
-  return reply.status(204).send()
+    return reply.status(200).send(resposta)
+
+  } catch (error) {
+    console.error('Erro ao deletar o usuário:', error)
+
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message
+      }
+    }
+    return reply.status(500).send(respostaErro)
+  }
 })
 
 // 
