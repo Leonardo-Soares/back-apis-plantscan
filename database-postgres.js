@@ -1,4 +1,6 @@
 import { sql } from './db.js'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export class DatabasePostgres {
   async list() {
@@ -22,13 +24,15 @@ export class DatabasePostgres {
   async create(usuario) {
     const { name, email, senha, telefone, numero_matricula } = usuario
 
+    const senha_hash = await bcrypt.hash(senha, 6);
+
     await sql`insert into usuarios (
       name, 
       email, 
       senha,
       telefone,
       numero_matricula
-      ) VALUES (${name}, ${email}, ${senha}, ${telefone}, ${numero_matricula})`
+      ) VALUES (${name}, ${email}, ${senha_hash}, ${telefone}, ${numero_matricula})`
   }
 
   async update(id, usuario) {
@@ -99,4 +103,41 @@ export class DatabasePostgresPlantas {
   async delete(id) {
     await sql`delete from plantas where id = ${id}`
   }
+}
+
+export class DatabasePostgresLogin {
+  async login(email, senha, reply) {
+
+    // Verifica se o e-mail existe no banco de dados
+    const result = await sql`SELECT * FROM usuarios WHERE email = ${email}`
+
+    if (result.length === 0) {
+      return 'E-mail não cadastrado'
+    }
+    const usuario = result[0];
+
+    // // Verifica se a senha está correta
+    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+    if (!senhaCorreta) {
+      return 'Senha incorreta'
+    }
+
+    // Gera um token de autenticação
+    const token = jwt.sign({ id: usuario.id, email: usuario.email }, 'seu_segredo', {
+      expiresIn: '1h', // Tempo de expiração do token (1 hora, por exemplo)
+    })
+    
+    return {
+      sucess: true,
+      results: {
+        message: 'Sucesso',        
+        name: usuario.name,
+        email: usuario.email,
+        telefone: usuario.telefone,
+        numero_matricula: usuario.numero_matricula,
+        token: token,
+      }
+    }
+  }
+
 }

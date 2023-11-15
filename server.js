@@ -1,10 +1,11 @@
-import { fastify } from "fastify"
-import { DatabasePostgres, DatabasePostgresPlantas } from "./database-postgres.js"
+import { fastify } from 'fastify'
+import { DatabasePostgres, DatabasePostgresPlantas, DatabasePostgresLogin } from './database-postgres.js'
 
 const server = fastify()
 
 const database = new DatabasePostgres()
 const databasePlantas = new DatabasePostgresPlantas()
+const databaseLogin = new DatabasePostgresLogin()
 
 // 
 // ### CRUD Usuários
@@ -114,6 +115,23 @@ server.delete('/planta/:id', async (request, reply) => {
   const planta = request.params.id
 
   await databasePlantas.delete(planta)
+
+  return reply.status(204).send()
+})
+
+// 
+// ### Login usuário
+// 
+
+// Rota para autenticação
+server.post('/login', async (request, reply) => {
+  const { email, senha } = request.body;
+
+  const response = await databaseLogin.login(email, senha, reply)
+
+  if (response) {
+    return reply.status(201).send(response)
+  }
 
   return reply.status(204).send()
 })
