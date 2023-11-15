@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 export class DatabasePostgres {
   async list() {
     let usuario
-    usuario = sql`select * from usuarios`
+    usuario = await sql`select * from usuarios`
 
     return {
       sucess: true,
