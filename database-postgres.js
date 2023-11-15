@@ -63,4 +63,11 @@ export class DatabasePostgresPlantas {
       name_scientific
       ) VALUES (${image}, ${effects}, ${curiosities}, ${names_group}, ${name_popular}, ${characteristics}, ${name_scientific})`
   }
+
+  async list() {
+    let planta
+    planta = sql`select * from plantas`
+
+    return planta
+  }
 }

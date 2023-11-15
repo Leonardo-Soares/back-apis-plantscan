@@ -80,6 +80,11 @@ server.post('/planta', async (request, reply) => {
   return reply.status(201).send()
 })
 
+server.get('/plantas', async () => {
+  const plantas = await databasePlantas.list()
+  return plantas
+})
+
 server.listen({
   host: '0.0.0.0',
   port: process.env.PORT ?? 3333,
