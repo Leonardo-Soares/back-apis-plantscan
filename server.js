@@ -153,22 +153,37 @@ server.delete('/usuarios/:id', async (request, reply) => {
 // 
 
 server.post('/planta', async (request, reply) => {
-  const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = request.body
+  try {
+    const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = request.body
 
-  const response = await databasePlantas.create({
-    image: image,
-    effects: effects,
-    curiosities: curiosities,
-    names_group: names_group,
-    name_popular: name_popular,
-    characteristics: characteristics,
-    name_scientific: name_scientific,
-  })
+    const response = await databasePlantas.create({
+      image: image,
+      effects: effects,
+      curiosities: curiosities,
+      names_group: names_group,
+      name_popular: name_popular,
+      characteristics: characteristics,
+      name_scientific: name_scientific,
+    })
 
-  if (response) {
-    return reply.status(200).send(response)
-  } else {
-    return reply.send(response)
+    const resposta = {
+      success: true,
+      message: 'Planta cadastrada com sucesso',
+    }
+
+    return reply.status(200).send(resposta)
+
+  } catch (error) {
+    console.error('Erro ao cadastrar planta:', error)
+
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message
+      }
+    }
+    return reply.status(500).send(respostaErro)
   }
 })
 
@@ -224,20 +239,39 @@ server.get('/planta/:id', async (request, reply) => {
 })
 
 server.put('/planta/:id', async (request, reply) => {
-  const plantaId = request.params.id
-  const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = request.body
+  try {
+    const plantaId = request.params.id
+    const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = request.body
 
-  await databasePlantas.update(plantaId, {
-    image,
-    effects,
-    curiosities,
-    names_group,
-    name_popular,
-    characteristics,
-    name_scientific
-  })
+    const response = await databasePlantas.update(plantaId, {
+      image,
+      effects,
+      curiosities,
+      names_group,
+      name_popular,
+      characteristics,
+      name_scientific
+    })
 
-  return reply.status(204).send()
+    const resposta = {
+      success: true,
+      message: 'Planta atualizada com sucesso',
+    }
+
+    return reply.status(200).send(resposta)
+
+  } catch (error) {
+    console.error('Erro ao atualizar planta:', error)
+
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message
+      }
+    }
+    return reply.status(500).send(respostaErro)
+  }
 
 })
 
