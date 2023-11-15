@@ -31,7 +31,8 @@ server.post('/usuario', async (request, reply) => {
 
 server.get('/usuarios', async () => {
   const usuarios = await database.list()
-  return usuarios
+
+  return reply.status(204).send(usuarios)
 })
 
 server.get('/usuario/:id', async (request) => {
