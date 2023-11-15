@@ -85,6 +85,13 @@ server.get('/plantas', async () => {
   return plantas
 })
 
+server.get('/planta/:id', async (request) => {
+  const plantaId = request.params.id
+
+  const plantas = await databasePlantas.detalhe(plantaId)
+  return plantas
+})
+
 server.listen({
   host: '0.0.0.0',
   port: process.env.PORT ?? 3333,

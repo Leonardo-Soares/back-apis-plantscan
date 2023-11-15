@@ -70,4 +70,15 @@ export class DatabasePostgresPlantas {
 
     return planta
   }
+
+  async detalhe(plantaId) {
+    let planta
+
+    if (plantaId) {
+      planta = await sql`SELECT * FROM plantas WHERE id = ${plantaId}`
+      return planta[0] || false;
+    } else {
+      return false
+    }
+  }
 }
