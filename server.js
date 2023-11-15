@@ -5,6 +5,10 @@ const server = fastify()
 
 const database = new DatabasePostgres()
 
+// 
+// ### CRUD Usuários
+// 
+
 server.post('/usuario', async (request, reply) => {
   const { name, email, senha, numero_matricula, telefone } = request.body
   await database.create({
@@ -19,10 +23,7 @@ server.post('/usuario', async (request, reply) => {
   return reply.status(201).send()
 })
 
-server.get('/usuario', async (request) => {
-  // const search = request.query.search
-
-  // const videos = await database.list(search)
+server.get('/usuarios', async () => {
   const usuarios = await database.list()
   return usuarios
 })
@@ -33,7 +34,6 @@ server.get('/usuario/:id', async (request) => {
   const usuarios = await database.detalhe(usuarioId)
   return usuarios
 })
-
 
 server.put('/usuario/:id', async (request, reply) => {
   const usuarioId = request.params.id
@@ -59,6 +59,10 @@ server.delete('/usuarios/:id', async (request, reply) => {
 
   return reply.status(204).send()
 })
+
+// 
+// ### CRUD Plantas
+// 
 
 server.listen({
   host: '0.0.0.0',

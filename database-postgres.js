@@ -2,15 +2,9 @@ import { randomUUID } from 'crypto'
 import { sql } from './db.js'
 
 export class DatabasePostgres {
-  async list(search) {
+  async list() {
     let usuario
     usuario = sql`select * from usuarios`
-
-    // if (search) {
-    //   usuario = sql`select * from usuario where title ilike ${'%' + search + '%'}`
-    // } else {
-    //   usuario = sql`select * from usuario`
-    // }
 
     return usuario
   }
