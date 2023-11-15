@@ -52,10 +52,10 @@ server.put('/usuario/:id', async (request, reply) => {
 
 })
 
-server.delete('/videos/:id', async (request, reply) => {
-  const videoId = request.params.id
+server.delete('/usuarios/:id', async (request, reply) => {
+  const usuarioId = request.params.id
 
-  await database.delete(videoId)
+  await database.delete(usuarioId)
 
   return reply.status(204).send()
 })
