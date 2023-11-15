@@ -24,7 +24,87 @@ export class DatabasePostgres {
   async create(usuario) {
     const { name, email, senha, telefone, numero_matricula } = usuario
 
-    const senha_hash = await bcrypt.hash(senha, 6);
+    function validarEmail(email) {
+      const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regexEmail.test(email);
+    }
+
+    if (!name) {
+      return {
+        sucess: false,
+        results: {
+          message: 'Campo nome é obrigatório',
+        }
+      }
+    }
+
+    if (!telefone) {
+      return {
+        sucess: false,
+        results: {
+          message: 'Campo telefone é obrigatório',
+        }
+      }
+    }
+
+    if (!numero_matricula) {
+      return {
+        sucess: false,
+        results: {
+          message: 'Campo número de matrícula é obrigatório',
+        }
+      }
+    }
+
+    if (!email) {
+      return {
+        sucess: false,
+        results: {
+          message: 'Campo e-mail é obrigatório',
+        }
+      }
+    }
+
+    if (!validarEmail(email)) {
+      return {
+        sucess: false,
+        results: {
+          message: 'Informe um e-mail válido',
+        }
+      }
+    }
+
+    // Verifica se o e-mail já está cadastrado
+    const emailExistente = await sql`SELECT 1 FROM usuarios WHERE email = ${email} LIMIT 1`;
+
+    if (emailExistente.length >= 1) {
+      return {
+        sucess: false,
+        results: {
+          message: 'Esse e-mail já possui um cadastrado',
+        }
+      }
+    }
+
+    if (!senha) {
+      return {
+        sucess: false,
+        results: {
+          message: 'Campo senha é obrigatório',
+        }
+      }
+    }
+
+    if (senha.length < 6) {
+      return {
+        sucess: false,
+        results: {
+          message: 'A senha precisa possuir 6 caracteres no mínimo',
+        }
+      }
+    }
+
+    const senha_hash = await bcrypt.hash(senha, 6)
 
     await sql`insert into usuarios (
       name, 
@@ -33,6 +113,13 @@ export class DatabasePostgres {
       telefone,
       numero_matricula
       ) VALUES (${name}, ${email}, ${senha_hash}, ${telefone}, ${numero_matricula})`
+
+      return {
+        sucess: true,
+        results: {
+          message: 'Usuário criado com sucesso',
+        }
+      }
   }
 
   async update(id, usuario) {
@@ -126,11 +213,11 @@ export class DatabasePostgresLogin {
     const token = jwt.sign({ id: usuario.id, email: usuario.email }, 'seu_segredo', {
       expiresIn: '1h', // Tempo de expiração do token (1 hora, por exemplo)
     })
-    
+
     return {
       sucess: true,
       results: {
-        message: 'Sucesso',        
+        message: 'Sucesso',
         name: usuario.name,
         email: usuario.email,
         telefone: usuario.telefone,

@@ -13,7 +13,8 @@ const databaseLogin = new DatabasePostgresLogin()
 
 server.post('/usuario', async (request, reply) => {
   const { name, email, senha, numero_matricula, telefone } = request.body
-  await database.create({
+
+  const response = await database.create({
     name: name,
     email: email,
     senha: senha,
@@ -21,7 +22,11 @@ server.post('/usuario', async (request, reply) => {
     numero_matricula: numero_matricula,
   })
 
-  return reply.status(201).send()
+  if (response) {
+    return reply.status(200).send(response)
+  } else {
+    return reply.send(response)
+  }
 })
 
 server.get('/usuarios', async () => {
@@ -130,7 +135,7 @@ server.post('/login', async (request, reply) => {
   const response = await databaseLogin.login(email, senha, reply)
 
   if (response) {
-    return reply.status(201).send(response)
+    return reply.status(204).send(response)
   }
 
   return reply.status(204).send()
