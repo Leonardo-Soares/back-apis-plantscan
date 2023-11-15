@@ -95,4 +95,8 @@ export class DatabasePostgresPlantas {
     name_scientific = ${name_scientific}
     WHERE id = ${id}`
   }
+
+  async delete(id) {
+    await sql`delete from plantas where id = ${id}`
+  }
 }

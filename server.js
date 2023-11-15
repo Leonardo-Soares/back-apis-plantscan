@@ -41,10 +41,10 @@ server.put('/usuario/:id', async (request, reply) => {
 
 
   await database.update(usuarioId, {
-    name, 
-    email, 
-    senha, 
-    telefone, 
+    name,
+    email,
+    senha,
+    telefone,
     numero_matricula
   })
 
@@ -97,10 +97,10 @@ server.put('/planta/:id', async (request, reply) => {
   const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = request.body
 
   await databasePlantas.update(plantaId, {
-    image, 
-    effects, 
-    curiosities, 
-    names_group, 
+    image,
+    effects,
+    curiosities,
+    names_group,
     name_popular,
     characteristics,
     name_scientific
@@ -108,6 +108,14 @@ server.put('/planta/:id', async (request, reply) => {
 
   return reply.status(204).send()
 
+})
+
+server.delete('/planta/:id', async (request, reply) => {
+  const planta = request.params.id
+
+  await databasePlantas.delete(planta)
+
+  return reply.status(204).send()
 })
 
 server.listen({
