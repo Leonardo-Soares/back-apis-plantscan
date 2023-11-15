@@ -19,11 +19,12 @@ server.post('/usuario', async (request, reply) => {
   return reply.status(201).send()
 })
 
-server.get('/videos', async (request) => {
-  const search = request.query.search
+server.get('/usuario', async (request) => {
+  // const search = request.query.search
 
-  const videos = await database.list(search)
-  return videos
+  // const videos = await database.list(search)
+  const usuarios = await database.list()
+  return usuarios
 })
 
 server.put('/videos/:id', async (request, reply) => {

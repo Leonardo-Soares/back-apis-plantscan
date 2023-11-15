@@ -4,6 +4,7 @@ import { sql } from './db.js'
 export class DatabasePostgres {
   async list(search) {
     let usuario
+    usuario = sql`select * from usuarios`
 
     // if (search) {
     //   usuario = sql`select * from usuario where title ilike ${'%' + search + '%'}`
