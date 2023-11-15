@@ -3,22 +3,27 @@ import { sql } from './db.js'
 
 export class DatabasePostgres {
   async list(search) {
-    let videos
+    let usuario
 
-    if (search) {
-      videos = sql`select * from videos where title ilike ${'%' + search + '%'}`
-    } else {
-      videos = sql`select * from videos`
-    }
+    // if (search) {
+    //   usuario = sql`select * from usuario where title ilike ${'%' + search + '%'}`
+    // } else {
+    //   usuario = sql`select * from usuario`
+    // }
 
-    return videos
+    return usuario
   }
 
-  async create(video) {
-    const videoId = randomUUID()
-    const { title, description, duration } = video
-
-    await sql`insert into videos (id, title, description, duration) VALUES (${videoId}, ${title}, ${description}, ${duration})`
+  async create(usuario) {
+    const { name, email, senha, numero_matricula, telefone  } = usuario
+    
+    await sql`insert into usuarios (
+      name, 
+      email, 
+      senha,
+      numero_matricula,
+      telefone
+      ) VALUES (${name}, ${email}, ${senha}, ${numero_matricula}, ${telefone})`
   }
 
   async update(id, video) {
