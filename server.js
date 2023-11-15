@@ -35,15 +35,17 @@ server.get('/usuario/:id', async (request) => {
 })
 
 
-server.put('/videos/:id', async (request, reply) => {
-  const videoId = request.params.id
-  const { title, description, duration } = request.body
+server.put('/usuario/:id', async (request, reply) => {
+  const usuarioId = request.params.id
+  const { name, email, senha, telefone, numero_matricula } = request.body
 
 
-  await database.update(videoId, {
-    title,
-    duration,
-    description,
+  await database.update(usuarioId, {
+    name, 
+    email, 
+    senha, 
+    telefone, 
+    numero_matricula
   })
 
   return reply.status(204).send()

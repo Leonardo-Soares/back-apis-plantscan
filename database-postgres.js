@@ -20,28 +20,35 @@ export class DatabasePostgres {
 
     if (usuarioId) {
       usuario = await sql`SELECT * FROM usuarios WHERE id = ${usuarioId}`
-      return usuario[0] || false; 
+      return usuario[0] || false;
     } else {
       return false
-    }    
+    }
   }
 
   async create(usuario) {
-    const { name, email, senha, numero_matricula, telefone  } = usuario
-    
+    const { name, email, senha, telefone, numero_matricula } = usuario
+
     await sql`insert into usuarios (
       name, 
       email, 
       senha,
-      numero_matricula,
-      telefone
-      ) VALUES (${name}, ${email}, ${senha}, ${numero_matricula}, ${telefone})`
+      telefone,
+      numero_matricula
+      ) VALUES (${name}, ${email}, ${senha}, ${telefone}, ${numero_matricula})`
   }
 
-  async update(id, video) {
-    const { title, description, duration } = video
+  async update(id, usuario) {
+    const { name, email, senha, telefone, numero_matricula } = usuario
 
-    await sql`update videos set title = ${title}, description = ${description}, duration = ${duration} WHERE id = ${id}`
+    await sql`update usuarios set 
+    name = ${name}, 
+    email = ${email}, 
+    senha = ${senha},
+    telefone = ${telefone},
+    numero_matricula = ${numero_matricula}
+
+    WHERE id = ${id}`
   }
 
   async delete(id) {
