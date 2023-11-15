@@ -7,16 +7,7 @@ export class DatabasePostgres {
     let usuario
     usuario = await sql`select * from usuarios`
 
-    return {
-      sucess: true,
-      results: {
-        message: 'Sucesso',
-        name: usuario.name,
-        email: usuario.email,
-        telefone: usuario.telefone,
-        numero_matricula: usuario.numero_matricula
-      }
-    }
+    return usuario
   }
 
   async detalhe(usuarioId) {

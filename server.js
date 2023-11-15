@@ -29,11 +29,40 @@ server.post('/usuario', async (request, reply) => {
   }
 })
 
-server.get('/usuarios', async () => {
-  const usuarios = await database.list()
+server.get('/usuarios', async (request, reply) => {
+  try {
+    const usuarios = await database.list();
 
-  return reply.status(204).send(usuarios)
-})
+    if (usuarios.length === 0) {
+      return reply.status(204).send();
+    }
+
+    // Criar a estrutura desejada antes dos usuários
+    const resposta = {
+      success: true,
+      results: {
+        usuarios: usuarios
+      }
+    };
+
+    // Enviar a resposta com a estrutura criada
+    return reply.status(200).send(resposta);
+  } catch (error) {
+    console.error('Erro ao obter a lista de usuários:', error);
+
+    // Se ocorrer um erro, retornar um status 500 (Internal Server Error)
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message // Você pode ajustar a mensagem de erro conforme necessário
+      }
+    };
+
+    return reply.status(500).send(respostaErro);
+  }
+});
+
 
 server.get('/usuario/:id', async (request) => {
   const usuarioId = request.params.id
