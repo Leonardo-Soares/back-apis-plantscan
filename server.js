@@ -172,9 +172,29 @@ server.post('/planta', async (request, reply) => {
   }
 })
 
-server.get('/plantas', async () => {
-  const plantas = await databasePlantas.list()
-  return plantas
+server.get('/plantas', async (request, reply) => {
+  try {
+    const plantas = await databasePlantas.list()
+
+    const resposta = {
+      success: true,
+      message: 'Plantas encontradas com sucesso',
+      results: plantas
+    }
+
+    return reply.status(200).send(resposta)
+  } catch (error) {
+    console.error('Erro ao obter a lista de usuários:', error)
+
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message
+      }
+    }
+    return reply.status(500).send(respostaErro)
+  }
 })
 
 server.get('/planta/:id', async (request) => {
