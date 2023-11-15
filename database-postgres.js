@@ -81,4 +81,18 @@ export class DatabasePostgresPlantas {
       return false
     }
   }
+
+  async update(id, planta) {
+    const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = planta
+
+    await sql`update plantas set 
+    image = ${image}, 
+    effects = ${effects}, 
+    curiosities = ${curiosities},
+    names_group = ${names_group},
+    name_popular = ${name_popular},
+    characteristics = ${characteristics},
+    name_scientific = ${name_scientific}
+    WHERE id = ${id}`
+  }
 }

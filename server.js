@@ -92,6 +92,24 @@ server.get('/planta/:id', async (request) => {
   return plantas
 })
 
+server.put('/planta/:id', async (request, reply) => {
+  const plantaId = request.params.id
+  const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = request.body
+
+  await databasePlantas.update(plantaId, {
+    image, 
+    effects, 
+    curiosities, 
+    names_group, 
+    name_popular,
+    characteristics,
+    name_scientific
+  })
+
+  return reply.status(204).send()
+
+})
+
 server.listen({
   host: '0.0.0.0',
   port: process.env.PORT ?? 3333,
