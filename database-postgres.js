@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto'
 import { sql } from './db.js'
 
 export class DatabasePostgres {
@@ -47,5 +46,21 @@ export class DatabasePostgres {
 
   async delete(id) {
     await sql`delete from usuarios where id = ${id}`
+  }
+}
+
+export class DatabasePostgresPlantas {
+  async create(planta) {
+    const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = planta
+
+    await sql`insert into plantas (
+      image,
+      effects,
+      curiosities,
+      names_group,
+      name_popular,
+      characteristics,
+      name_scientific
+      ) VALUES (${image}, ${effects}, ${curiosities}, ${names_group}, ${name_popular}, ${characteristics}, ${name_scientific})`
   }
 }

@@ -1,9 +1,10 @@
 import { fastify } from "fastify"
-import { DatabasePostgres } from "./database-postgres.js"
+import { DatabasePostgres, DatabasePostgresPlantas } from "./database-postgres.js"
 
 const server = fastify()
 
 const database = new DatabasePostgres()
+const databasePlantas = new DatabasePostgresPlantas()
 
 // 
 // ### CRUD Usuários
@@ -18,7 +19,6 @@ server.post('/usuario', async (request, reply) => {
     telefone: telefone,
     numero_matricula: numero_matricula,
   })
-  console.log(request.body)
 
   return reply.status(201).send()
 })
@@ -63,6 +63,22 @@ server.delete('/usuarios/:id', async (request, reply) => {
 // 
 // ### CRUD Plantas
 // 
+
+server.post('/planta', async (request, reply) => {
+  const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = request.body
+
+  await databasePlantas.create({
+    image: image,
+    effects: effects,
+    curiosities: curiosities,
+    names_group: names_group,
+    name_popular: name_popular,
+    characteristics: characteristics,
+    name_scientific: name_scientific,
+  })
+
+  return reply.status(201).send()
+})
 
 server.listen({
   host: '0.0.0.0',
