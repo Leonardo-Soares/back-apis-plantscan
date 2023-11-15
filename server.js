@@ -197,11 +197,30 @@ server.get('/plantas', async (request, reply) => {
   }
 })
 
-server.get('/planta/:id', async (request) => {
-  const plantaId = request.params.id
+server.get('/planta/:id', async (request, reply) => {
+  try {
+    const plantaId = request.params.id
+    const plantas = await databasePlantas.detalhe(plantaId)
 
-  const plantas = await databasePlantas.detalhe(plantaId)
-  return plantas
+    const resposta = {
+      success: true,
+      message: 'Planta encontrada com sucesso',
+      results: plantas
+    }
+
+    return reply.status(200).send(resposta)
+  } catch (error) {
+    console.error('Erro ao obter planta:', error)
+
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message
+      }
+    }
+    return reply.status(500).send(respostaErro)
+  }
 })
 
 server.put('/planta/:id', async (request, reply) => {
