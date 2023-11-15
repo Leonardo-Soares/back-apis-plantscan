@@ -27,6 +27,14 @@ server.get('/usuario', async (request) => {
   return usuarios
 })
 
+server.get('/usuario/:id', async (request) => {
+  const usuarioId = request.params.id
+
+  const usuarios = await database.detalhe(usuarioId)
+  return usuarios
+})
+
+
 server.put('/videos/:id', async (request, reply) => {
   const videoId = request.params.id
   const { title, description, duration } = request.body

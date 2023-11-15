@@ -15,6 +15,17 @@ export class DatabasePostgres {
     return usuario
   }
 
+  async detalhe(usuarioId) {
+    let usuario
+
+    if (usuarioId) {
+      usuario = await sql`SELECT * FROM usuarios WHERE id = ${usuarioId}`
+      return usuario[0] || false; 
+    } else {
+      return false
+    }    
+  }
+
   async create(usuario) {
     const { name, email, senha, numero_matricula, telefone  } = usuario
     
