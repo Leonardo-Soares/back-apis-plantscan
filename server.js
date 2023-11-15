@@ -63,13 +63,16 @@ server.get('/usuarios', async (request, reply) => {
 server.get('/usuario/:id', async (request, reply) => {
   try {
     const usuarioId = request.params.id
-    const usuarios = await database.detalhe(usuarioId)
+    const usuario = await database.detalhe(usuarioId)
 
     const resposta = {
       success: true,
       message: 'Usuário encontrado com sucesso',
       results: {
-        usuario: usuarios
+        name: usuario.name,
+        email: usuario.email,
+        numero_matricula: usuario.numero_matricula,
+        telefone: usuario.telefone,
       }
     }
 
