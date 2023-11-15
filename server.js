@@ -67,6 +67,7 @@ server.get('/usuario/:id', async (request, reply) => {
 
     const resposta = {
       success: true,
+      message: 'Usuário encontrado com sucesso',
       results: {
         usuario: usuarios
       }
@@ -88,20 +89,37 @@ server.get('/usuario/:id', async (request, reply) => {
 })
 
 server.put('/usuario/:id', async (request, reply) => {
-  const usuarioId = request.params.id
-  const { name, email, senha, telefone, numero_matricula } = request.body
+  try {
+    const usuarioId = request.params.id
+    const { name, email, senha, telefone, numero_matricula } = request.body
 
+    const response = await database.update(usuarioId, {
+      name,
+      email,
+      senha,
+      telefone,
+      numero_matricula
+    })
 
-  await database.update(usuarioId, {
-    name,
-    email,
-    senha,
-    telefone,
-    numero_matricula
-  })
+    const resposta = {
+      success: true,
+      message: 'Usuário atualizado com sucesso',
+    }
 
-  return reply.status(204).send()
+    return reply.status(200).send(resposta)
 
+  } catch (error) {
+    console.error('Erro ao obter detalhes do usuário:', error)
+
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message
+      }
+    }
+    return reply.status(500).send(respostaErro)
+  }
 })
 
 server.delete('/usuarios/:id', async (request, reply) => {
