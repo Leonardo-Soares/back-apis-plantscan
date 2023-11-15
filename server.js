@@ -73,7 +73,7 @@ server.delete('/usuarios/:id', async (request, reply) => {
 server.post('/planta', async (request, reply) => {
   const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = request.body
 
-  await databasePlantas.create({
+  const response = await databasePlantas.create({
     image: image,
     effects: effects,
     curiosities: curiosities,
@@ -83,7 +83,11 @@ server.post('/planta', async (request, reply) => {
     name_scientific: name_scientific,
   })
 
-  return reply.status(201).send()
+  if (response) {
+    return reply.status(200).send(response)
+  } else {
+    return reply.send(response)
+  }
 })
 
 server.get('/plantas', async () => {

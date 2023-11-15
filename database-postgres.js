@@ -114,12 +114,12 @@ export class DatabasePostgres {
       numero_matricula
       ) VALUES (${name}, ${email}, ${senha_hash}, ${telefone}, ${numero_matricula})`
 
-      return {
-        sucess: true,
-        results: {
-          message: 'Usuário criado com sucesso',
-        }
+    return {
+      sucess: true,
+      results: {
+        message: 'Usuário criado com sucesso',
       }
+    }
   }
 
   async update(id, usuario) {
@@ -144,6 +144,69 @@ export class DatabasePostgresPlantas {
   async create(planta) {
     const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = planta
 
+    if (!image) {
+      return {
+        sucess: false,
+        results: {
+          message: 'É obrigatório informar uma imagem',
+        }
+      }
+    }
+
+    if (!effects) {
+      return {
+        sucess: false,
+        results: {
+          message: 'É obrigatório informar os efeitos',
+        }
+      }
+    }
+
+    if (!curiosities) {
+      return {
+        sucess: false,
+        results: {
+          message: 'É obrigatório informar as curiosidades',
+        }
+      }
+    }
+
+    if (!names_group) {
+      return {
+        sucess: false,
+        results: {
+          message: 'É obrigatório informar o nome do grupo',
+        }
+      }
+    }
+
+    if (!name_popular) {
+      return {
+        sucess: false,
+        results: {
+          message: 'É obrigatório informar o nome popular',
+        }
+      }
+    }
+
+    if (!characteristics) {
+      return {
+        sucess: false,
+        results: {
+          message: 'É obrigatório informar as características',
+        }
+      }
+    }
+
+    if (!name_scientific) {
+      return {
+        sucess: false,
+        results: {
+          message: 'É obrigatório informar o nome cientifíco',
+        }
+      }
+    }
+
     await sql`insert into plantas (
       image,
       effects,
@@ -153,6 +216,13 @@ export class DatabasePostgresPlantas {
       characteristics,
       name_scientific
       ) VALUES (${image}, ${effects}, ${curiosities}, ${names_group}, ${name_popular}, ${characteristics}, ${name_scientific})`
+
+    return {
+      sucess: true,
+      results: {
+        message: 'Planta cadasrada com sucesso',
+      }
+    }
   }
 
   async list() {
