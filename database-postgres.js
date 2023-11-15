@@ -15,9 +15,9 @@ export class DatabasePostgres {
 
     if (usuarioId) {
       usuario = await sql`SELECT * FROM usuarios WHERE id = ${usuarioId}`
-      return usuario[0] || false;
+      return usuario[0]
     } else {
-      return false
+      return []
     }
   }
 
