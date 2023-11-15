@@ -276,11 +276,30 @@ server.put('/planta/:id', async (request, reply) => {
 })
 
 server.delete('/planta/:id', async (request, reply) => {
-  const planta = request.params.id
+  try {
+    const planta = request.params.id
 
-  await databasePlantas.delete(planta)
+    const response = await databasePlantas.delete(planta)
 
-  return reply.status(204).send()
+    const resposta = {
+      success: true,
+      message: 'Planta excluída com sucesso',
+    }
+
+    return reply.status(200).send(resposta)
+
+  } catch (error) {
+    console.error('Erro ao deletar planta:', error)
+
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message
+      }
+    }
+    return reply.status(500).send(respostaErro)
+  }
 })
 
 // 
