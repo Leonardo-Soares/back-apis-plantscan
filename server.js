@@ -173,12 +173,8 @@ server.post('/planta', async (request, reply) => {
       name_scientific: name_scientific,
     })
 
-    const resposta = {
-      success: true,
-      message: 'Planta cadastrada com sucesso',
-    }
 
-    return reply.status(200).send(resposta)
+    return reply.status(200).send(response)
 
   } catch (error) {
     console.error('Erro ao cadastrar planta:', error)
