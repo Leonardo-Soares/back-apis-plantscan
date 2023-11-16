@@ -146,63 +146,49 @@ export class DatabasePostgresPlantas {
     if (!image) {
       return {
         success: false,
-        results: {
-          message: 'É obrigatório informar uma imagem',
-        }
+        message: 'É obrigatório informar uma imagem',
       }
     }
 
     if (!effects) {
       return {
         success: false,
-        results: {
-          message: 'É obrigatório informar os efeitos',
-        }
+        message: 'É obrigatório informar os efeitos',
       }
     }
 
     if (!curiosities) {
       return {
         success: false,
-        results: {
-          message: 'É obrigatório informar as curiosidades',
-        }
+        message: 'É obrigatório informar as curiosidades',
       }
     }
 
     if (!names_group) {
       return {
         success: false,
-        results: {
-          message: 'É obrigatório informar o nome do grupo',
-        }
+        message: 'É obrigatório informar o nome do grupo',
       }
     }
 
     if (!name_popular) {
       return {
         success: false,
-        results: {
-          message: 'É obrigatório informar o nome popular',
-        }
+        message: 'É obrigatório informar o nome popular',
       }
     }
 
     if (!characteristics) {
       return {
         success: false,
-        results: {
-          message: 'É obrigatório informar as características',
-        }
+        message: 'É obrigatório informar as características',
       }
     }
 
     if (!name_scientific) {
       return {
         success: false,
-        results: {
-          message: 'É obrigatório informar o nome cientifíco',
-        }
+        message: 'É obrigatório informar o nome cientifíco',
       }
     }
 
