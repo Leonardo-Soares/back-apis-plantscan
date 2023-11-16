@@ -210,7 +210,7 @@ export class DatabasePostgresPlantas {
 
   async list() {
     let planta
-    planta = sql`select * from plantas`
+    planta = await sql`SELECT * FROM plantas ORDER BY id DESC`
 
     return planta
   }
