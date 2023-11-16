@@ -1,5 +1,5 @@
-import { sql } from './db.js'
 import bcrypt from 'bcrypt'
+import { sql } from './db.js'
 import jwt from 'jsonwebtoken'
 
 export class DatabasePostgres {

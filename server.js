@@ -315,13 +315,21 @@ server.delete('/planta/:id', async (request, reply) => {
 
 // Rota para autenticação
 server.post('/login', async (request, reply) => {
+  const { email, senha } = request.body;
+
+  if (!email) {
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'E-mail precisa ser informado'
+      }
+    }
+    return reply.status(402).send(respostaErro)
+  }
+
   try {
-    const { email, senha } = request.body;
-
     const response = await databaseLogin.login(email, senha, reply)
-
     return reply.status(200).send(response)
-
   } catch (error) {
     console.error('Erro ao fazer login:', error)
 
