@@ -257,10 +257,22 @@ export class DatabasePostgresPlantas {
 export class DatabasePostgresLogin {
   async login(email, senha, reply) {
 
+    function validarEmail(email) {
+      const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regexEmail.test(email);
+    }
+
     if (!email) {
       return {
         success: false,
         message: 'Precisa ser informado um e-mail',
+      }
+    }
+
+    if (!validarEmail(email)) {
+      return {
+        success: false,
+        message: 'O e-mail precisa ser válido',
       }
     }
 
