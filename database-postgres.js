@@ -24,8 +24,6 @@ export class DatabasePostgres {
   async create(usuario) {
     const { name, email, senha, telefone, numero_matricula, confirmar_senha } = usuario
 
-    console.log(usuario);
-
     function validarEmail(email) {
       const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return regexEmail.test(email);
