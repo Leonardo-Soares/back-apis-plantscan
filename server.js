@@ -12,20 +12,30 @@ const databaseLogin = new DatabasePostgresLogin()
 // 
 
 server.post('/usuario', async (request, reply) => {
-  const { name, email, senha, numero_matricula, telefone } = request.body
+  try {
+    const { name, email, senha, numero_matricula, telefone } = request.body
 
-  const response = await database.create({
-    name: name,
-    email: email,
-    senha: senha,
-    telefone: telefone,
-    numero_matricula: numero_matricula,
-  })
+    const response = await database.create({
+      name: name,
+      email: email,
+      senha: senha,
+      telefone: telefone,
+      numero_matricula: numero_matricula,
+    })
 
-  if (response) {
     return reply.status(200).send(response)
-  } else {
-    return reply.send(response)
+  } catch (error) {
+    console.error('Erro ao cadastrar usuário:', error)
+
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message
+      }
+    }
+
+    return reply.status(500).send(respostaErro)
   }
 })
 

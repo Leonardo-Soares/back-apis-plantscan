@@ -32,45 +32,35 @@ export class DatabasePostgres {
     if (!name) {
       return {
         sucess: false,
-        results: {
-          message: 'Campo nome é obrigatório',
-        }
+        message: 'Campo nome é obrigatório',
       }
     }
 
     if (!telefone) {
       return {
         sucess: false,
-        results: {
-          message: 'Campo telefone é obrigatório',
-        }
+        message: 'Campo telefone é obrigatório',
       }
     }
 
     if (!numero_matricula) {
       return {
         sucess: false,
-        results: {
-          message: 'Campo número de matrícula é obrigatório',
-        }
+        message: 'Campo número de matrícula é obrigatório',
       }
     }
 
     if (!email) {
       return {
         sucess: false,
-        results: {
-          message: 'Campo e-mail é obrigatório',
-        }
+        message: 'Campo e-mail é obrigatório',
       }
     }
 
     if (!validarEmail(email)) {
       return {
         sucess: false,
-        results: {
-          message: 'Informe um e-mail válido',
-        }
+        message: 'Informe um e-mail válido',
       }
     }
 
@@ -80,27 +70,21 @@ export class DatabasePostgres {
     if (emailExistente.length >= 1) {
       return {
         sucess: false,
-        results: {
-          message: 'Esse e-mail já possui um cadastrado',
-        }
+        message: 'Esse e-mail já possui um cadastrado',
       }
     }
 
     if (!senha) {
       return {
         sucess: false,
-        results: {
-          message: 'Campo senha é obrigatório',
-        }
+        message: 'Campo senha é obrigatório',
       }
     }
 
     if (senha.length < 6) {
       return {
         sucess: false,
-        results: {
-          message: 'A senha precisa possuir 6 caracteres no mínimo',
-        }
+        message: 'A senha precisa possuir 6 caracteres no mínimo',
       }
     }
 
