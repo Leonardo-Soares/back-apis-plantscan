@@ -204,9 +204,7 @@ export class DatabasePostgresPlantas {
 
     return {
       success: true,
-      results: {
-        message: 'Planta cadasrada com sucesso',
-      }
+      message: 'Planta cadasrada com sucesso',
     }
   }
 
