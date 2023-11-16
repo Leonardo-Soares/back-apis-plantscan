@@ -279,19 +279,26 @@ export class DatabasePostgresLogin {
     const result = await sql`SELECT * FROM usuarios WHERE email = ${email}`
 
     if (result.length === 0) {
-      return 'E-mail não cadastrado'
+      return {
+        success: false,
+        message: 'Esse e-mail não possui um cadastro',
+      }
     }
-    const usuario = result[0];
 
-    // // Verifica se a senha está correta
-    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+    const usuario = result[0]
+
+    // Verifica se a senha está correta
+    const senhaCorreta = await bcrypt.compare(senha, usuario.senha)
     if (!senhaCorreta) {
-      return 'Senha incorreta'
+      return {
+        success: false,
+        message: 'Senha incorreta',
+      }
     }
 
     // Gera um token de autenticação
     const token = jwt.sign({ id: usuario.id, email: usuario.email }, 'seu_segredo', {
-      expiresIn: '1h', // Tempo de expiração do token (1 hora, por exemplo)
+      expiresIn: '1h',
     })
 
     return {

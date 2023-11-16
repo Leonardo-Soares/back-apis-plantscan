@@ -305,15 +305,25 @@ server.delete('/planta/:id', async (request, reply) => {
 
 // Rota para autenticação
 server.post('/login', async (request, reply) => {
-  const { email, senha } = request.body;
+  try {
+    const { email, senha } = request.body;
 
-  const response = await databaseLogin.login(email, senha, reply)
+    const response = await databaseLogin.login(email, senha, reply)
 
-  if (response) {
-    return reply.status(204).send(response)
+    return reply.status(200).send(response)
+
+  } catch (error) {
+    console.error('Erro ao fazer login:', error)
+
+    const respostaErro = {
+      success: false,
+      results: {
+        message: 'Erro interno do servidor',
+        error: error.message
+      }
+    }
+    return reply.status(500).send(respostaErro)
   }
-
-  return reply.status(204).send()
 })
 
 server.listen({
