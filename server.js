@@ -317,15 +317,15 @@ server.delete('/planta/:id', async (request, reply) => {
 server.post('/login', async (request, reply) => {
   const { email, senha } = request.body;
 
-  if (!email) {
-    const respostaErro = {
-      success: false,
-      results: {
-        message: 'E-mail precisa ser informado'
-      }
-    }
-    return reply.status(402).send(respostaErro)
-  }
+  // if (!email) {
+  //   const respostaErro = {
+  //     success: false,
+  //     results: {
+  //       message: 'E-mail precisa ser informado'
+  //     }
+  //   }
+  //   return reply.status(402).send(respostaErro)
+  // }
 
   try {
     const response = await databaseLogin.login(email, senha, reply)
