@@ -31,35 +31,35 @@ export class DatabasePostgres {
 
     if (!name) {
       return {
-        sucess: false,
+        success: false,
         message: 'Campo nome é obrigatório',
       }
     }
 
     if (!telefone) {
       return {
-        sucess: false,
+        success: false,
         message: 'Campo telefone é obrigatório',
       }
     }
 
     if (!numero_matricula) {
       return {
-        sucess: false,
+        success: false,
         message: 'Campo número de matrícula é obrigatório',
       }
     }
 
     if (!email) {
       return {
-        sucess: false,
+        success: false,
         message: 'Campo e-mail é obrigatório',
       }
     }
 
     if (!validarEmail(email)) {
       return {
-        sucess: false,
+        success: false,
         message: 'Informe um e-mail válido',
       }
     }
@@ -69,21 +69,21 @@ export class DatabasePostgres {
 
     if (emailExistente.length >= 1) {
       return {
-        sucess: false,
+        success: false,
         message: 'Esse e-mail já possui um cadastrado',
       }
     }
 
     if (!senha) {
       return {
-        sucess: false,
+        success: false,
         message: 'Campo senha é obrigatório',
       }
     }
 
     if (senha.length < 6) {
       return {
-        sucess: false,
+        success: false,
         message: 'A senha precisa possuir 6 caracteres no mínimo',
       }
     }
@@ -99,7 +99,7 @@ export class DatabasePostgres {
       ) VALUES (${name}, ${email}, ${senha_hash}, ${telefone}, ${numero_matricula})`
 
     return {
-      sucess: true,
+      success: true,
       message: 'Usuário criado com sucesso',
     }
   }
@@ -112,7 +112,7 @@ export class DatabasePostgres {
 
     if (emailExistente.length >= 1) {
       return {
-        sucess: false,
+        success: false,
         message: 'Esse e-mail já está sendo usado em outro cadastro',
       }
     }
@@ -138,7 +138,7 @@ export class DatabasePostgresPlantas {
 
     if (!image) {
       return {
-        sucess: false,
+        success: false,
         results: {
           message: 'É obrigatório informar uma imagem',
         }
@@ -147,7 +147,7 @@ export class DatabasePostgresPlantas {
 
     if (!effects) {
       return {
-        sucess: false,
+        success: false,
         results: {
           message: 'É obrigatório informar os efeitos',
         }
@@ -156,7 +156,7 @@ export class DatabasePostgresPlantas {
 
     if (!curiosities) {
       return {
-        sucess: false,
+        success: false,
         results: {
           message: 'É obrigatório informar as curiosidades',
         }
@@ -165,7 +165,7 @@ export class DatabasePostgresPlantas {
 
     if (!names_group) {
       return {
-        sucess: false,
+        success: false,
         results: {
           message: 'É obrigatório informar o nome do grupo',
         }
@@ -174,7 +174,7 @@ export class DatabasePostgresPlantas {
 
     if (!name_popular) {
       return {
-        sucess: false,
+        success: false,
         results: {
           message: 'É obrigatório informar o nome popular',
         }
@@ -183,7 +183,7 @@ export class DatabasePostgresPlantas {
 
     if (!characteristics) {
       return {
-        sucess: false,
+        success: false,
         results: {
           message: 'É obrigatório informar as características',
         }
@@ -192,7 +192,7 @@ export class DatabasePostgresPlantas {
 
     if (!name_scientific) {
       return {
-        sucess: false,
+        success: false,
         results: {
           message: 'É obrigatório informar o nome cientifíco',
         }
@@ -210,7 +210,7 @@ export class DatabasePostgresPlantas {
       ) VALUES (${image}, ${effects}, ${curiosities}, ${names_group}, ${name_popular}, ${characteristics}, ${name_scientific})`
 
     return {
-      sucess: true,
+      success: true,
       results: {
         message: 'Planta cadasrada com sucesso',
       }
@@ -310,7 +310,7 @@ export class DatabasePostgresLogin {
     })
 
     return {
-      sucess: true,
+      success: true,
       message: 'Sucesso',
       results: {
         name: usuario.name,
