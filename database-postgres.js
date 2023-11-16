@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 export class DatabasePostgres {
   async list() {
     let usuario
-    usuario = await sql`select * from usuarios`
+    usuario = await sql`SELECT id, name, email, numero_matricula, telefone FROM usuarios`;
 
     return usuario
   }
@@ -124,6 +124,16 @@ export class DatabasePostgres {
 
   async update(id, usuario) {
     const { name, email, senha, telefone, numero_matricula } = usuario
+
+    // Verifica se o e-mail já está cadastrado
+    const emailExistente = await sql`SELECT 1 FROM usuarios WHERE email = ${email} LIMIT 1`;
+
+    if (emailExistente.length >= 1) {
+      return {
+        sucess: false,
+        message: 'Esse e-mail já está sendo usado em outro cadastro',
+      }
+    }
 
     await sql`update usuarios set 
     name = ${name}, 

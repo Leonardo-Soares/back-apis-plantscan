@@ -33,16 +33,10 @@ server.get('/usuarios', async (request, reply) => {
   try {
     const usuarios = await database.list()
 
-    if (usuarios.length === 0) {
-      return reply.status(204).send()
-    }
-
     const resposta = {
       success: true,
-      results: {
-        usuarios: usuarios
-      }
-    };
+      results: usuarios
+    }
 
     return reply.status(200).send(resposta)
   } catch (error) {
