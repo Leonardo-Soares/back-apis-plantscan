@@ -100,9 +100,7 @@ export class DatabasePostgres {
 
     return {
       sucess: true,
-      results: {
-        message: 'Usuário criado com sucesso',
-      }
+      message: 'Usuário criado com sucesso',
     }
   }
 
