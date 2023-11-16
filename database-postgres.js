@@ -257,6 +257,20 @@ export class DatabasePostgresPlantas {
 export class DatabasePostgresLogin {
   async login(email, senha, reply) {
 
+    if (!email) {
+      return {
+        success: false,
+        message: 'Precisa ser informado um e-mail',
+      }
+    }
+
+    if (!senha) {
+      return {
+        success: false,
+        message: 'Precisa ser informado uma senha',
+      }
+    }
+
     // Verifica se o e-mail existe no banco de dados
     const result = await sql`SELECT * FROM usuarios WHERE email = ${email}`
 
