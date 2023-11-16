@@ -143,17 +143,17 @@ export class DatabasePostgresPlantas {
   async create(planta) {
     const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = planta
 
-    // if (!image) {
-    //   return {
-    //     success: false,
-    //     message: 'É obrigatório informar uma imagem',
-    //   }
-    // }
-
-    if (!effects) {
+    if (!name_popular) {
       return {
         success: false,
-        message: 'É obrigatório informar os efeitos',
+        message: 'É obrigatório informar o nome popular',
+      }
+    }
+
+    if (!name_scientific) {
+      return {
+        success: false,
+        message: 'É obrigatório informar o nome cientifíco',
       }
     }
 
@@ -164,17 +164,10 @@ export class DatabasePostgresPlantas {
       }
     }
 
-    if (!names_group) {
+    if (!effects) {
       return {
         success: false,
-        message: 'É obrigatório informar o nome do grupo',
-      }
-    }
-
-    if (!name_popular) {
-      return {
-        success: false,
-        message: 'É obrigatório informar o nome popular',
+        message: 'É obrigatório informar os efeitos',
       }
     }
 
@@ -185,12 +178,19 @@ export class DatabasePostgresPlantas {
       }
     }
 
-    if (!name_scientific) {
+    if (!names_group) {
       return {
         success: false,
-        message: 'É obrigatório informar o nome cientifíco',
+        message: 'É obrigatório informar o nome do grupo',
       }
     }
+
+    // if (!image) {
+    //   return {
+    //     success: false,
+    //     message: 'É obrigatório informar uma imagem',
+    //   }
+    // }
 
     await sql`insert into plantas (
       image,
