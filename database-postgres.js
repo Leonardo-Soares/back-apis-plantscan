@@ -311,8 +311,8 @@ export class DatabasePostgresLogin {
 
     return {
       sucess: true,
+      message: 'Sucesso',
       results: {
-        message: 'Sucesso',
         name: usuario.name,
         email: usuario.email,
         telefone: usuario.telefone,
