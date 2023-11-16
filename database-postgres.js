@@ -276,13 +276,6 @@ export class DatabasePostgresLogin {
       }
     }
 
-    if (!senha) {
-      return {
-        success: false,
-        message: 'Precisa ser informado uma senha',
-      }
-    }
-
     // Verifica se o e-mail existe no banco de dados
     const result = await sql`SELECT * FROM usuarios WHERE email = ${email}`
 
@@ -290,6 +283,13 @@ export class DatabasePostgresLogin {
       return {
         success: false,
         message: 'Esse e-mail não possui um cadastro',
+      }
+    }
+
+    if (!senha) {
+      return {
+        success: false,
+        message: 'Precisa ser informado uma senha',
       }
     }
 
