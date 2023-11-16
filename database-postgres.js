@@ -320,6 +320,7 @@ export class DatabasePostgresLogin {
       success: true,
       message: 'Sucesso',
       results: {
+        id: usuario.id,
         name: usuario.name,
         email: usuario.email,
         telefone: usuario.telefone,
