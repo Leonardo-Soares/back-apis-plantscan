@@ -22,7 +22,9 @@ export class DatabasePostgres {
   }
 
   async create(usuario) {
-    const { name, email, senha, telefone, numero_matricula } = usuario
+    const { name, email, senha, telefone, numero_matricula, confirmar_senha } = usuario
+
+    console.log(usuario);
 
     function validarEmail(email) {
       const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,13 +42,6 @@ export class DatabasePostgres {
       return {
         success: false,
         message: 'Campo telefone é obrigatório',
-      }
-    }
-
-    if (!numero_matricula) {
-      return {
-        success: false,
-        message: 'Campo número de matrícula é obrigatório',
       }
     }
 
@@ -74,6 +69,13 @@ export class DatabasePostgres {
       }
     }
 
+    if (!numero_matricula) {
+      return {
+        success: false,
+        message: 'Campo número de matrícula é obrigatório',
+      }
+    }
+
     if (!senha) {
       return {
         success: false,
@@ -85,6 +87,13 @@ export class DatabasePostgres {
       return {
         success: false,
         message: 'A senha precisa possuir 6 caracteres no mínimo',
+      }
+    }
+
+    if (!senha) {
+      return {
+        success: false,
+        message: 'Campo senha é obrigatório',
       }
     }
 
