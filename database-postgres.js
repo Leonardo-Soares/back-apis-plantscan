@@ -143,12 +143,12 @@ export class DatabasePostgresPlantas {
   async create(planta) {
     const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = planta
 
-    if (!image) {
-      return {
-        success: false,
-        message: 'É obrigatório informar uma imagem',
-      }
-    }
+    // if (!image) {
+    //   return {
+    //     success: false,
+    //     message: 'É obrigatório informar uma imagem',
+    //   }
+    // }
 
     if (!effects) {
       return {
