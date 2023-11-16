@@ -141,7 +141,7 @@ export class DatabasePostgres {
 
 export class DatabasePostgresPlantas {
   async create(planta) {
-    const { image, effects, curiosities, names_group, name_popular, characteristics, name_scientific } = planta
+    const { image = '#', effects, curiosities, names_group, name_popular, characteristics, name_scientific } = planta
 
     if (!name_popular) {
       return {
