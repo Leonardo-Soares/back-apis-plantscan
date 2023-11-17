@@ -73,6 +73,7 @@ server.get('/usuario/:id', async (request, reply) => {
       success: true,
       message: 'Usuário encontrado com sucesso',
       results: {
+        id: usuario.id,
         name: usuario.name,
         email: usuario.email,
         numero_matricula: usuario.numero_matricula,
